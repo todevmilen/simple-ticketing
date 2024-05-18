@@ -5,8 +5,19 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import Pagination from "@/components/Pagination";
 
-const Tickets = async () => {
-  const tickets = await prisma.ticket.findMany();
+interface SearchParams {
+  page: string;
+}
+
+const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const pageSize = 10;
+  const page = parseInt(searchParams.page) || 1;
+  const ticketCount = await prisma.ticket.count();
+
+  const tickets = await prisma.ticket.findMany({
+    take: pageSize,
+    skip: (page - 1) * pageSize,
+  });
 
   return (
     <div>
@@ -17,7 +28,11 @@ const Tickets = async () => {
         New Ticket
       </Link>
       <DataTable tickets={tickets} />
-      <Pagination pageSize={10} currentPage={1} itemCount={26} />
+      <Pagination
+        pageSize={pageSize}
+        currentPage={page}
+        itemCount={ticketCount}
+      />
     </div>
   );
 };
