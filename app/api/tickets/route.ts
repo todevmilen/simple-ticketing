@@ -17,5 +17,3 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(newTicket, { status: 201 });
 }
-
-export async function DELETE(request:)
