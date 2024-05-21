@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Form, FormField, FormControl, FormItem, FormLabel } from "./ui/form";
 import { userSchema } from "@/ValidationSchemas/users";
 import { z } from "zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import {
@@ -44,7 +44,6 @@ const UserForm = ({ user }: Props) => {
         await axios.post("/api/users", values);
       }
       setIsSubmitting(false);
-
       router.push("/users");
       router.refresh();
     } catch (error) {
